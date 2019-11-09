@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1570559306 source:d:\pen drive\2019\2º semestre\ed\jogo da forca\funcoes.c
+	<stdio.h>
+	<stdlib.h>
+	"funcoes.h"
+	<string.h>
+
+1570559112 source:d:\pen drive\2019\2º semestre\ed\jogo da forca\main.c
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	<time.h>
+	"funcoes.h"
+
+1570559304 d:\pen drive\2019\2º semestre\ed\jogo da forca\funcoes.h
+
+1570556092 d:\pen drive\2019\2º semestre\ed\jogo da forca\funcoes.c
+	<stdio.h>
+	"funcoes.h"
+

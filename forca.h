@@ -1,7 +1,7 @@
 #ifndef FORCA_H_INCLUDED
 #define FORCA_H_INCLUDED
 
-//Nome: Guilherme de Souza Seyfart RA: 18130
+//Nome:Guilherme de Suyza Seyfart RA: 18130
 #ifdef _WIN32
 # define CLEAR_SCREEN system ("cls")
 #else
@@ -14,14 +14,16 @@ struct noSecreto{
     char assunto[101];
     struct noSecreto * prox;
 };
+
 int conta(char *str);
+
 typedef struct noSecreto NoSecreto;
 typedef struct noSorteada NoSorteada;
 
 
 int temPalavraNaoUsada(NoSecreto *l);
 NoSecreto * retiraUmElemento (NoSecreto* l, char v[31]);
-NoSecreto * insere (NoSecreto* l, char i[31]);
+NoSecreto* coloca (NoSecreto* l, char i[31]);
 int tamanhoListaSecreta(NoSecreto *l);
 NoSecreto * retornaPalavraPos(NoSecreto *l, int pos);
 int geraAleatorio(int maximo);

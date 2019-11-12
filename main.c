@@ -1,126 +1,168 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "forca.h"
-void exibe()
-{
-    printf("Desenvolvido por Guilherme de Souza Seyfart 18130 ");
+//Nome:Gulherme de Souza Seyfart RA: 18130
+
+void copyright(){
+    CLEAR_SCREEN;
+    printf("=============================================================\n\n");
+    printf("JOGO DA FORCA\n");
+    printf("Desenvolvido por: \n\t Guilherme de Souza Seyfart \n\n\t");
+    printf("\tXXXXX - NNNNNNNNNNNNNNNNNNN\n");
+    printf("=============================================================\n\n");
 }
 
 int main()
 {
-    char nome[20];
-    printf("Digite seu nome: \n");
-    gets(nome);
-
-    char aux;
-    int help = 0;
-    int a = 0;
-    int b = 0;
-    int n = 0;
-    int cont = 0;
-    char letra;
+    setbuf(stdout, 0);
+    char nome[34] = "", aux, letra, letraM;
+    int n, cont, h, i, resp;
+    int a = 0, b = 0;
 do{
-     system("cls");
+     CLEAR_SCREEN;
      printf("Voce entrou no jogo da forca %s\n",nome);
-     printf("Jogar: Digite 1\n");
-     printf("Sair: Digite 0\n");
+     printf("Sair(0)\n");
+     printf("Jogar(1)\n");
+     printf("Configuracoes(2)\n");
      scanf("%d",&a);
     fflush(stdin);
       if(a == 1)
       {
-       b = 0;
-    exibe();
-    int x;
-    NoSecreto * lstSecreta = inicializaListaSecreta();
-    NoSecreto * sorteada;
-    char  aux1[31];
-    NoSecreto * usadas = inicializaListaSecreta();
-    lstSecreta = carregaListaArquivo(lstSecreta,"palavras.dat");
-    imprimeListaSecreta(lstSecreta);
+        b = 0;
+        copyright();
+        int x;
+        NoSecreto * lstSecreta = inicializaListaSecreta();
+        NoSecreto * sorteada;
+        char  aux1[31];
+        NoSecreto * usadas = inicializaListaSecreta();
+        lstSecreta = carregaListaArquivo(lstSecreta,"palavras.dat");
+        imprimeListaSecreta(lstSecreta);
 
       do{
         cont = 0;
-        system("cls");
-
-
-
+        CLEAR_SCREEN;
         sorteada= sorteiaPalavra(lstSecreta);
-
-
-        if(sorteada!=NULL){
+        if(sorteada!=NULL)
+            {
                 strcpy(aux1,sorteada->palavra);
             n = conta(sorteada->palavra);
-
+            i = n*3;
             for(int i = 0; i<n; i++)
             {
                     sorteada->palavra[i] = '*';
             }
-            for(int x = 0; x<n*3; x++){
-
-                    help = 0;
-           if(strcmp(aux1,sorteada->palavra) == 0)
+            for(int x = 0; x<n*3; x++)
+            {
+                h = 0;
+                if(strcmp(aux1,sorteada->palavra) == 0)
                 {
-                    printf("\nVoce achou a palavra\n");
-                    help = 1;
+                    printf("\nAcertou!!!\n");
+                    h = 1;
                     break;
                 }
-                else{
-                        cont= cont+1;
-            exibe();
-            printf("%s\n", sorteada->palavra);
-
-            printf("Digite uma letra:\n");
-
-            scanf("%c",&letra);
-
-            system("cls");
-
+                else
+                {
+                cont++;
+                }
+            copyright();
+            printf("Numero de Tentativas: %d\n", i);
+            printf("%s ", sorteada->palavra);
+            printf("%s\n", sorteada->assunto);
+            printf("Faca sua tentativa: ");
+            scanf("%c",&letraM);
+            i--;
+            letra = tolower(letraM);
+            CLEAR_SCREEN;
             fflush(stdin);
-
             for(int i = 0; i<n; i++)
                 {
                 if(aux1[i] == letra)
                 {
                     sorteada->palavra[i] = aux1[i];
                 }
-
             }
+            }
+            if(h == 1)
+            {
+            CLEAR_SCREEN;
+            printf("\nParabens! Voce ganhou em %d tentaivas\n",cont);
+            printf("Deseja jogar novamente?\nSim(1)\nNao(2)\nresposta: ");
+                scanf("%d",&resp);
+                if(resp == 2)
+                {
+                    exit(0);
+                }
+                else if(resp == 1)
+                {
+                    a = 1;
+                }
+                else
+                {
+                    printf("Não reconhecido, fechando programa");
+                    exit(0);
                 }
             }
-            if(help == 1)
+            else
             {
-            system("cls");
-            printf("\nParabens, encontrou a palavra em %d tentaivas\n",cont);
-            printf("Clique no enter para continuar o jogo\n");
+                CLEAR_SCREEN;
+                printf("\nSuas tentativas acabaram\n");
+                printf("Numero de tentativas: %d\n",cont);
+                printf("jogar novamente?\nSim(1)\nNao(2)\nResposta: ");
+                scanf("%d",&resp);
+                if(resp == 2)
+                {
+                    exit(0);
+                }
+                else if(resp == 1)
+                {
+                    a = 1;
+                }
+                else
+                {
+                    printf("Não reconhecido, fechando programa");
+                    exit(0);
+                }
             }
-            else{
-            system("cls");
-            printf("\nvoce esgotou as tentativas\n");
-            printf("Numero de tentativas: %d\n",cont);
-            printf("Clique no enter para continuar o jogo\n");
-            }
-
             lstSecreta = retiraUmElemento(lstSecreta,sorteada->palavra);
             aux = lstSecreta;
-        }
-        else{
-            printf("Nao existe nenhuma palavra disponivel!\n\n");
-            b = 1;
-
-
-
-          }
-       }while(getchar()!='f' && b == 0);
-
+      }
+            else
+            {
+                printf("As palavras acabaram.\n\n");
+                b = 1;
+                printf("Deseja jogar novamente?\nSim(1)\nNao(2)\nResposta: ");
+                scanf("%d",&resp);
+                if(resp == 2)
+                {
+                    exit(0);
+                }
+                else if(resp == 1)
+                {
+                    a = 1;
+                }
+                else
+                {
+                    printf("Não reconhecido, fechando programa");
+                    exit(0);
+                }
+            }
+      }
+        while(getchar()!='f' && b == 0);
       }
 
+    else if(a == 0)
+    {
+        return (0);
+    }
 
-
-
+    else if(a == 2)
+    {
+         CLEAR_SCREEN;
+         printf("Digite seu nome: ");
+         gets(nome);
+    }
 }while(a != 0);
-
-
-
     return 0;
 }

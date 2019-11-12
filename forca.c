@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "forca.h"
-//Guilherme de Souza Seyfart ra: 18130
+//Guilherme de Souza Seyfart RA: 18130
 
 int geraAleatorio(int maximo)
 {
@@ -49,7 +49,7 @@ NoSecreto * carregaListaArquivo(NoSecreto * l, char nomeArq[255])
 
     fWords = fopen(nomeArq,"r");
     if(fWords==NULL){
-        printf("Falha ao acessar base de dados!!!\n\n");
+        printf("Falha ao acessar o banco de dados!\n\n");
         exit(0);
     }
     while(fgets(linha,1024,fWords))
@@ -68,6 +68,28 @@ NoSecreto * carregaListaArquivo(NoSecreto * l, char nomeArq[255])
     }
 
     fclose(fWords);
+    return l;
+}
+
+NoSecreto* retiraUmElemento (NoSecreto* l, char v[31])
+{
+    NoSecreto* ant = NULL;
+    NoSecreto* p = l;
+    while (p != NULL && p->palavra != v) {
+        ant = p;
+        p = p->prox;
+    }
+
+    if (p == NULL)
+        return l;
+
+    if (ant == NULL) {
+        l = p->prox;
+    }
+    else {
+    ant->prox = p->prox;
+    }
+    free(p);
     return l;
 }
 
@@ -116,35 +138,16 @@ NoSecreto * retornaPalavraPos(NoSecreto *l, int pos)
     return p;
 }
 
-NoSecreto* retiraUmElemento (NoSecreto* l, char v[31])
-{
-    NoSecreto* ant = NULL;
-    NoSecreto* p = l;
-    while (p != NULL && p->palavra != v) {
-        ant = p;
-        p = p->prox;
-    }
-
-    if (p == NULL)
-        return l;
-
-    if (ant == NULL) {
-        l = p->prox;
-    }
-    else {
-    ant->prox = p->prox;
-    }
-    free(p);
-    return l;
-}
-
-NoSecreto* insere (NoSecreto* l, char i[31])
+NoSecreto* coloca (NoSecreto* l, char i[31])
 {
     NoSecreto* novo = (NoSecreto*) malloc(sizeof(NoSecreto));
     strcpy(novo->palavra, i);
     novo->prox = l;
     return novo;
 }
+
+
+
 int conta(char *s)
 {
    int i;
